@@ -25,6 +25,8 @@ deb ${DEBS}: ${GLUSTERFSSRC} ${DEBSRC}
 	rm -rf ${GLUSTERFSDIR}
 	tar xf ${GLUSTERFSSRC}
 	cd ${GLUSTERFSDIR}; tar xvf ../${DEBSRC}
+	# Hack - create missing log directory
+	echo "/var/log/glusterfs" >> ${GLUSTERFSDIR}/debian/glusterfs-client.dirs
 	cd ${GLUSTERFSDIR}; dpkg-buildpackage -b -uc -us
 
 .PHONY: upload
