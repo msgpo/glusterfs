@@ -8,6 +8,8 @@ GLUSTERFSDIR=glusterfs-${GLUSTERFSVER}
 DEBSRC=glusterfs_${GLUSTERFSVER}-${DEBRELEASE}.debian.tar.gz
 
 ARCH:=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
+GITVERSION:=$(shell cat .git/refs/heads/master)
+SOURCETXT="git clone git://git.proxmox.com/git/glusterfs.git\\ngit checkout ${GITVERSION}"
 
 DEBS=									\
 	glusterfs-common_${GLUSTERFSVER}-${DEBRELEASE}_${ARCH}.deb	\
@@ -25,6 +27,10 @@ deb ${DEBS}: ${GLUSTERFSSRC} ${DEBSRC}
 	rm -rf ${GLUSTERFSDIR}
 	tar xf ${GLUSTERFSSRC}
 	cd ${GLUSTERFSDIR}; tar xvf ../${DEBSRC}
+	echo "${SOURCETXT}" > ${GLUSTERFSDIR}/debian/SOURCE
+	echo "debian/SOURCE" >>${GLUSTERFSDIR}/debian/glusterfs-server.docs
+	echo "debian/SOURCE" >>${GLUSTERFSDIR}/debian/glusterfs-common.docs
+	echo "debian/SOURCE" >>${GLUSTERFSDIR}/debian/glusterfs-client.docs
 	# Hack - create missing log directory
 	echo "/var/log/glusterfs" >> ${GLUSTERFSDIR}/debian/glusterfs-client.dirs
 	cd ${GLUSTERFSDIR}; dpkg-buildpackage -b -uc -us
