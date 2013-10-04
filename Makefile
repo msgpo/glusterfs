@@ -1,7 +1,7 @@
 RELEASE=3.0
 
-GLUSTERFSVER=3.4.0
-DEBRELEASE=2
+GLUSTERFSVER=3.4.1
+DEBRELEASE=1
 
 GLUSTERFSSRC=glusterfs_${GLUSTERFSVER}.orig.tar.gz
 GLUSTERFSDIR=glusterfs-${GLUSTERFSVER}
@@ -31,8 +31,6 @@ deb ${DEBS}: ${GLUSTERFSSRC} ${DEBSRC}
 	echo "debian/SOURCE" >>${GLUSTERFSDIR}/debian/glusterfs-server.docs
 	echo "debian/SOURCE" >>${GLUSTERFSDIR}/debian/glusterfs-common.docs
 	echo "debian/SOURCE" >>${GLUSTERFSDIR}/debian/glusterfs-client.docs
-	# Hack - create missing log directory
-	echo "/var/log/glusterfs" >> ${GLUSTERFSDIR}/debian/glusterfs-client.dirs
 	cd ${GLUSTERFSDIR}; dpkg-buildpackage -b -uc -us
 
 .PHONY: upload
