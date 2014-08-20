@@ -1,11 +1,11 @@
-RELEASE=3.1
+RELEASE=3.2
 
-GLUSTERFSVER=3.4.2
+GLUSTERFSVER=3.5.2
 DEBRELEASE=1
 
 GLUSTERFSSRC=glusterfs_${GLUSTERFSVER}.orig.tar.gz
 GLUSTERFSDIR=glusterfs-${GLUSTERFSVER}
-DEBSRC=glusterfs_${GLUSTERFSVER}-${DEBRELEASE}.debian.tar.gz
+DEBSRC=glusterfs_${GLUSTERFSVER}-${DEBRELEASE}.debian.tar.xz
 
 ARCH:=$(shell dpkg-architecture -qDEB_BUILD_ARCH)
 GITVERSION:=$(shell cat .git/refs/heads/master)
